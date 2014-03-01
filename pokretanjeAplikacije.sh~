@@ -1,0 +1,11 @@
+
+export ANDROIDSDK="/home/mihailo/conf/android-sdk-linux"
+export ANDROIDNDK="/home/mihailo/conf/android-ndk-r8c"
+export ANDROIDNDKVER=r8c
+export ANDROIDAPI=14
+export PATH=$PATH:/home/mihailo/conf/android-sdk-linux/platform-tools
+export PATH=$PATH:/home/mihailo/conf/android-sdk-linux#cd python-for-android 
+cd dist/default
+./build.py --package org.umlpainter --name umlpainter \ --version 1.0 --dir /home/mihailo/MasterRad/Projekat debug
+adb install bin/umlpainter-1.0-debug.apk
+
