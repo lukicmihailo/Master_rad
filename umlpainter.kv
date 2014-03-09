@@ -1,0 +1,35 @@
+#:kivy 1.8.0
+#:import kivy kivy
+
+<UMLPainterCanvas>:
+	BoxLayout:
+	    orientation: 'vertical'
+	    BoxLayout:
+	    	orientation: 'horizontal'
+	    	size_hint:(1,0.1)
+	    	Spinner:
+	     	   text: "Shapes"
+	     	   values:("Basic shape","Links","User Defined")
+	     	   size_hint:(.4,1)
+	    	Button:
+	     	   text: "Button 2"
+	     	   size_hint:(.4,1)
+	    	Button:
+	     	   text: "Button 3"
+	     	   size_hint:(.4,1)
+	    	Button:
+	     	   text: "Button 4"
+	     	   size_hint:(.4,1)
+	    BoxLayout:
+	    	orientation: 'horizontal'
+	    	canvas:
+	    		Color:
+	    			rgba:(1,1,1)
+	    		Rectangle:
+	    			size:self.size
+	    			pos:self.pos
+    		
+    		
+    		
+    		
+
