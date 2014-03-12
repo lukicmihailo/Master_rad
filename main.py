@@ -16,7 +16,6 @@ class UMLPainterApp(App):
     title = 'UMLPainterApp'
 
     def build(self):
-        print("Ovde ide deo za kreiranje prozora")
         return UMLPainterCanvas()
 
 if __name__ == '__main__':
