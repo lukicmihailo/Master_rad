@@ -2,33 +2,44 @@
 #:import kivy kivy
 
 <UMLPainterCanvas>:
+	orientation: 'vertical'
 	BoxLayout:
-	    orientation: 'vertical'
-	    BoxLayout:
-	    	orientation: 'horizontal'
-	    	size_hint:(1,0.1)
-	    	Spinner:
-	     	   text: "Choose shapes"
-	     	   values:("Basic shape","Links","Text","User Defined")
-	     	   size_hint:(.4,1)
-	    	Button:
-	     	   text: "Button 2"
-	     	   size_hint:(.4,1)
-	    	Button:
-	     	   text: "Button 3"
-	     	   size_hintss:(.4,1)
-	    	Button:
-	     	   text: "Button 4"
-	     	   size_hint:(.4,1)
-	    BoxLayout:
-	    	orientation: 'horizontal'
-	    	canvas:
-	    		Color:
-	    			rgba:(1,1,1)
-	    		Rectangle:
-	    			size:self.size
-	    			pos:self.pos
-	    			id: canvasID
+		orientation: 'horizontal'
+		size_hint_y: None
+		id: menuID
+		Spinner:
+	 	   text: "Choose shapes"
+	 	   values:("Basic shape","Links","Text","User Defined")
+	 	   size_hint:(.4,1)
+	 	   on_touch_up: root.metoda1()
+		Button:
+	 	   text: "Button 2"
+	 	   size_hint:None , None
+	 	   on_touch_up: root.metoda2()
+		Button:
+	 	   text: "Button 3"
+	 	   size_hintss:(.4,1)
+	 	   on_touch_up: root.metoda3()
+		Button:
+	 	   text: "Button 4"
+	 	   size_hint:(.4,1)
+	 	   on_touch_up: root.metoda4()
+		Button:
+	 	   text: "Button 5"
+	 	   size_hintss:(.4,1)
+	 	   on_touch_up: root.metoda3()
+    FloatLayout:
+    	on_touch_up: root.metoda("canvas")
+    	id: canvasID
+    	canvas:
+    		Color:
+    			rgba: 1,1,1,1
+    		Rectangle:
+    			pos: self.pos
+    			size: self.size
+		Label:
+			text:'nesto'
+			fontsize: 100
     		
     		
     		
