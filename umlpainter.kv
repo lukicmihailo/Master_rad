@@ -1,49 +1,33 @@
 #:kivy 1.8.0
 #:import kivy kivy
 
-<UMLPainterCanvas>:
-	orientation: 'vertical'
-	size:root.size
-	BoxLayout:
-		orientation: 'horizontal'
-		size_hint_y: None
-		id: menuID
-		Spinner:
-	 	   text: "Choose shapes"
-	 	   values:("Basic shape","Links","Text","User Defined")
-	 	   size_hint:(.4,1)
-	 	   on_press: root.metoda1()
-		Button:
-	 	   text: "Button 2"
-	 	   size_hint:None , None
-	 	   on_press: root.metoda2()
-		Button:
-	 	   text: "Button 3"
-	 	   size_hintss:(.4,1)
-	 	   on_press: root.metoda3()
-		Button:
-	 	   text: "Button 4"
-	 	   size_hint:(.4,1)
-	 	   on_press: root.metoda4()
-		Button:
-	 	   text: "Button 5"
-	 	   size_hintss:(.4,1)
-	 	   on_press: root.metoda3()
-    FloatLayout:
-    	on_touch_down: root.metoda(self)
-    	id: canvasID
-    	size: root.size
-    	canvas:
-    		Color:
-    			rgba: 1,1,1,1
-    		Rectangle:
-    			pos: self.pos
-    			size: self.size
-		Label:
-			text:'nesto'
-			fontsize: 100
-    		
-    		
-    		
-    		
-
+<UMLPainterFrame>:
+	AnchorLayout:
+		anchor_x: 'left'
+		anchor_y: 'top'
+		ToolBox:
+			id: _tool_box
+			size_hint: None,None
+			width:100
+	AnchorLayout:
+		anchor_x: 'right'
+		anchor_y: 'top'
+		DrawingCanvas:
+			size_hint: None,None
+			width: root.width - _tool_box.width
+			height: root.height - _toolbar.height - _status_bar.height
+	AnchorLayout:
+		anchor_x: 'center'
+		anchor_y: 'bottom'
+		BoxLayout:
+			orientation: 'vertical'
+			Toolbar:
+				id: _toolbar
+				size_hint: 1,None
+				height: 48
+			StatusBar:
+				id: _status_bar
+				size_hint: 1,None
+				height: 24
+				
+		

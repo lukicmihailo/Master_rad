@@ -1,3 +1,0 @@
-title=UMLPainter
-author=Mihailo Lukic
-orientation=landscape
