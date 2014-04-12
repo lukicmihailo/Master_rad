@@ -1,14 +1,32 @@
+<ToolbarButton@Button>:
+	canvas.before:
+    	Color:
+        	rgba: 1, 1, 1, 0
+        Rectangle:
+        	pos: self.pos
+            size: self.size
+	
 <Toolbar@BoxLayout>:
+	canvas:
+		Color:
+			rgba: 0,0,0,1
+		Rectangle:
+			pos: self.pos
+			size:self.size	
 	orientation: 'horizontal'
 	padding: 2
-	Button:
-		text: 'Clear'
-	Button:
-		text: 'Remove'
-	ToggleButton:
+	ToolbarButton:
+		text: 'Choose elements'
+		color: 0,0,0,1
+	ToolbarButton:
+		text: 'Delete element'
+		color: 0,0,0,1
+	ToolbarButton:
 		text: 'Group'
-	Button:
-		text: 'Color'
-	ToggleButton:
-		text: 'Gestures'
+		color: 0,0,0,1
+	ToolbarButton:
+		text: 'Change color'
+		color: 0,0,0,1
+		
+
 		

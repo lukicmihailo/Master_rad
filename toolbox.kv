@@ -4,18 +4,30 @@
 	group: 'tool'
 
 <ToolBox@GridLayout>:
+	canvas:
+    	Color:
+        	rgba: 0, 0, 0, 0
+        Rectangle:
+        	pos: self.pos
+            size: self.size
 	cols:2
 	padding: 2
 	ToolButton:
-		text: 'Ellipse'
+		background_normal: 'images/ellipse.png'
+		background_down: 'images/ellipseRed.png'
 	ToolButton:
-		text: 'Line'
+		background_normal: 'images/line.png'
+		background_down: 'images/lineRed.png'
 	ToolButton:
-		text: 'Link'
+		background_normal: 'images/link.png'
+		background_down: 'images/linkRed.png'
 	ToolButton:
-		text: 'Rectangle'
+		background_normal: 'images/rectangle.png'
+		background_down: 'images/rectangleRed.png'
 	ToolButton:
-		text: 'Romb'
+		background_normal: 'images/romb.png'
+		background_down: 'images/rombRed.png'
 	ToolButton:
-		text: 'User'
+		background_normal: 'images/user.png'
+		background_down: 'images/userRed.png'
 				
