@@ -13,12 +13,18 @@
 		anchor_y: 'top'
 		ToolBox:
 			id: _tool_box
+			drawing_canvas: _drawing_canvas
+			uml_painter_frame: root
 			size_hint: None,None
 			width:50
 	AnchorLayout:
 		anchor_x: 'right'
 		anchor_y: 'top'
 		DrawingCanvas:
+			id: _drawing_canvas
+			status_bar: _status_bar
+			tool_bar: _toolbar
+			tool_box: _tool_box
 			size_hint: None,None
 			width: root.width - _tool_box.width
 			height: root.height - _toolbar.height - _status_bar.height
@@ -29,6 +35,8 @@
 			orientation: 'vertical'
 			Toolbar:
 				id: _toolbar
+				drawing_canvas: _drawing_canvas
+				uml_painter_frame: root
 				size_hint: 1,None
 				height: 48
 			StatusBar:
