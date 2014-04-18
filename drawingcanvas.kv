@@ -5,3 +5,11 @@
 		Rectangle:
 			pos: self.pos
 			size:self.size	
+	StickMan:
+		pos_hint: {'center_x': .5, 'center_y': .5}
+		canvas.before:
+			Translate:
+				xy: -self.width/2, -self.height/2
+			Scale:
+				xyz: 2,2,0
+		

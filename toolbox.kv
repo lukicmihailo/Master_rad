@@ -2,14 +2,14 @@
 	size_hint: None,None
 	size: 48,48
 	group: 'tool'
+	canvas:
+		PushMatrix:
+		Translate:
+			xy: self.x, self.y
+	canvas.after:
+		PopMatrix:
 
 <ToolBox@GridLayout>:
-	canvas:
-    	Color:
-        	rgba: 0, 0, 0, 0
-        Rectangle:
-        	pos: self.pos
-            size: self.size
 	cols:2
 	padding: 2
 	ToolButton:
@@ -28,6 +28,12 @@
 		background_normal: 'images/romb.png'
 		background_down: 'images/rombRed.png'
 	ToolButton:
-		background_normal: 'images/user.png'
-		background_down: 'images/userRed.png'
+		background_normal: 'images/background.png'
+		canvas:
+			Color:
+				rgba: 1,1,1,1
+		StickMan:
+			pos_hint: {'center_x':.5, 'center_y':.5}
+			on_click: 
+
 				

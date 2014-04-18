@@ -10,11 +10,12 @@ from kivy.lang import Builder
 from kivy.uix.anchorlayout import AnchorLayout
 
 kivy.require('1.8.0')
-
+Builder.load_file('basicShapes.kv')
 Builder.load_file('toolbox.kv')
 Builder.load_file('drawingcanvas.kv')
 Builder.load_file('toolbar.kv')
 Builder.load_file('statusbar.kv')
+
 class UMLPainterFrame(AnchorLayout):
     pass
 
