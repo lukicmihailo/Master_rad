@@ -1,15 +1,8 @@
 <DrawingCanvas@RelativeLayout>:
 	canvas:
 		Color:
-			rgba: 1,1,1,1
+			rgba: 1,0,1,1
 		Rectangle:
 			pos: self.pos
-			size:self.size	
-	StickMan:
-		pos_hint: {'center_x': .5, 'center_y': .5}
-		canvas.before:
-			Translate:
-				xy: -self.width/2, -self.height/2
-			Scale:
-				xyz: 2,2,0
+			size:self.size
 		

@@ -6,12 +6,11 @@ Created on Apr 18, 2014
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.graphics import Line
 
-
-
 class DraggableWidget(RelativeLayout):
     def __init__(self,**params):
         self.selected = None
         super(DraggableWidget,self).__init__(**params)
+
     def on_touch_down(self,touch):
         if self.collide_point(touch.x, touch.y):
             self.select()
@@ -41,6 +40,7 @@ class DraggableWidget(RelativeLayout):
         if self.selected:
             self.canvas.remove(self.selected)
             self.selected = None
+            
 class StickMan(DraggableWidget):
     pass
     
