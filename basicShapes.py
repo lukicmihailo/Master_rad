@@ -3,8 +3,10 @@ Created on Apr 18, 2014
 
 @author: mihailo
 '''
-from kivy.uix.relativelayout import RelativeLayout
 from kivy.graphics import Line
+from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.scatter import Scatter
+
 
 class DraggableWidget(RelativeLayout):
     def __init__(self,**params):

@@ -13,18 +13,30 @@
 <ToolBox@GridLayout>:
 	cols:2
 	padding: 2
-	ToolEllipse:
-		background_normal: 'images/ellipse.png'
-		background_down: 'images/ellipseRed.png'
-	ToolButton:
-		background_normal: 'images/line.png'
-		background_down: 'images/lineRed.png'
+	ToolCircle:
+		background_normal: 'images/background.png'
+		canvas:
+			Color:
+				rgba: 0,0,0,1
+			Line:
+				circle:24,24,14
+	ToolLine:
+		background_normal: 'images/background.png'
+		canvas:
+			Color:
+				rgba: 0,0,0,1
+			Line:
+				points: 10,10,38,38
 	ToolButton:
 		background_normal: 'images/link.png'
 		background_down: 'images/linkRed.png'
 	ToolRectangle:
-		background_normal: 'images/rectangle.png'
-		background_down: 'images/rectangleRed.png'
+		background_normal: 'images/background.png'
+		canvas:
+			Color:
+				rgba: 0,0,0,1
+			Line:
+				rectangle: 5,5,38,38
 	ToolButton:
 		background_normal: 'images/romb.png'
 		background_down: 'images/rombRed.png'
