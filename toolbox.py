@@ -6,7 +6,7 @@ Created on Apr 19, 2014
 import kivy
 from kivy.uix.togglebutton import ToggleButton
 from kivy.graphics import Line
-from basicShapes import DraggableWidget,StickMan
+from basicShapes import DraggableWidget,StickMan,UMLEllipse,UMLRectangle
 kivy.require('1.8.0')
 class ToolButton(ToggleButton):
     
@@ -29,7 +29,16 @@ class ToolStickman(ToolButton):
         sm = StickMan(width=48, height=48)
         sm.center = (x,y)
         ds.add_widget(sm)
-
+class ToolEllipse(ToolButton):
+    def draw(self, ds, x, y):
+        sm = UMLEllipse(width=70, height=30)
+        sm.center = (x,y)
+        ds.add_widget(sm)
+class ToolRectangle(ToolButton):
+    def draw(self, ds, x, y):
+        sm = UMLRectangle(width=48, height=48)
+        sm.center = (x,y)
+        ds.add_widget(sm)
 
 
 

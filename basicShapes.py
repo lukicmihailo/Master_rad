@@ -43,6 +43,10 @@ class DraggableWidget(RelativeLayout):
             
 class StickMan(DraggableWidget):
     pass
+class UMLRectangle(DraggableWidget):
+    pass
+class UMLEllipse(DraggableWidget):
+    pass
     
     
     
