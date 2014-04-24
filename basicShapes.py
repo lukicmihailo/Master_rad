@@ -8,7 +8,7 @@ from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.scatter import Scatter
 
 
-class DraggableWidget(RelativeLayout):
+class DraggableWidget(Scatter):
     def __init__(self,**params):
         self.selected = None
         super(DraggableWidget,self).__init__(**params)
