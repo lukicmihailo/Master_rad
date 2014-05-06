@@ -12,10 +12,10 @@ class Toolbar(BoxLayout):
     
     def clear(self,instance):
         self.drawing_canvas.clear_widgets()
-    def remove (self,instance,value):
+    def remove (self,instance):
         ds = self.drawing_canvas
-        if len(ds.childen) > 0:
-            ds.remove_widget(ds.childen[0])
+        if len(ds.children) > 0:
+            ds.remove_widget(ds.children[0])
     def group(self,instance,value):
         if value == 'down':
             self.group_mode = True
