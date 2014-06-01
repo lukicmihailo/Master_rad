@@ -3,13 +3,15 @@ Created on Apr 24, 2014
 
 @author: mihailo
 '''
-from kivy.uix.boxlayout import BoxLayout
 
+#!/usr/bin/kivy
+import kivy
+from kivy.uix.boxlayout import BoxLayout
+from kivy.properties import NumericProperty,ListProperty
 
 class Toolbar(BoxLayout):
-
     group_mode = False
-    
+    translation = ListProperty(None)
     def clear(self,instance):
         self.drawing_canvas.clear_widgets()
     def remove (self,instance):
@@ -27,5 +29,9 @@ class Toolbar(BoxLayout):
     def gestures(self,instance,value):
         pass
     def unselect_all(self):
-        for child in self.drawing_canvas.childen:
+        for child in self.drawing_canvas.children:
             child.unselect()
+    def on_translation(self,instance,value):
+        for child in self.drawing_canvas.children:
+            if child.selected:
+                child.translate(*self.translation)
