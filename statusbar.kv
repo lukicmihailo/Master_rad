@@ -1,12 +1,15 @@
-<StatusBar@BoxLayout>:
+#: import statusbar statusbar
+<StatusBar>:
 	canvas:
 		Color:
 			rgba: 0,0,0,1
 		Rectangle:
 			pos: self.pos
 			size:self.size	
+	msg_text: _msg_label.text
 	orientation: 'horizontal'
 	Label:
-		text: 'Total Figures: ?'
+		text: 'Total Figures: '+ str(root.counter)
 	Label:
+		id: _msg_label
 		text: 'Kivy started'
