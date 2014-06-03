@@ -34,17 +34,16 @@ class ToolFigure(ToolButton):
         ds.bind(on_touch_move=self.update_figure)
         ds.bind(on_touch_up=self.end_figure) 
     def update_figure(self,ds,touch):
-        if ds.collide_point(touch.x,touch.y):
-            (x,y) = ds.to_widget(touch.x,touch.y)
-            ds.canvas.remove(self.figure)
-            with ds.canvas:
-                self.figure = self.create_figure(self.ix, self.iy,x,y)
+        ds.canvas.remove(self.figure)
+        with ds.canvas:
+            self.figure = self.create_figure(self.ix, self.iy, touch.x, touch.y)
+               
     def end_figure(self,ds,touch):
         ds.unbind(on_touch_move=self.update_figure)
         ds.unbind(on_touch_up=self.end_figure)
         ds.canvas.remove(self.figure)
         (fx,fy)=ds.to_widget(touch.x,touch.y)
-        self.widgetize(ds,self.ix,self.iy,fx,fy)
+        self.widgetize(ds,self.ix,self.iy,touch.x,touch.y)
     def widgetize(self,ds,ix,iy,fx,fy):
         widget = self.create_widget(ix,iy,fx,fy)
         (ix,iy) = widget.to_local(ix,iy,relative=True)

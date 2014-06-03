@@ -20,14 +20,15 @@
 	AnchorLayout:
 		anchor_x: 'right'
 		anchor_y: 'top'
-		DrawingCanvas:
-			id: _drawing_canvas
-			status_bar: _status_bar
-			tool_bar: _toolbar
-			tool_box: _tool_box
+		RelativeLayout:
 			size_hint: None,None
 			width: root.width - _tool_box.width
 			height: root.height - _toolbar.height - _status_bar.height
+			DrawingCanvas:
+				id: _drawing_canvas
+				status_bar: _status_bar
+				tool_bar: _toolbar
+				tool_box: _tool_box
 	AnchorLayout:
 		anchor_x: 'center'
 		anchor_y: 'bottom'
