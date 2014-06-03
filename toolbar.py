@@ -12,6 +12,8 @@ from kivy.properties import NumericProperty,ListProperty
 class Toolbar(BoxLayout):
     group_mode = False
     translation = ListProperty(None)
+    rotation = NumericProperty(0)
+    scale = NumericProperty(0)
     def clear(self,instance):
         self.drawing_canvas.clear_widgets()
     def remove (self,instance):
@@ -33,5 +35,13 @@ class Toolbar(BoxLayout):
             child.unselect()
     def on_translation(self,instance,value):
         for child in self.drawing_canvas.children:
-            if child.selected:
+            if child.selected and not child.touched:
                 child.translate(*self.translation)
+    def on_rotation(self, instance, value):
+        for child in self.drawing_canvas.children:
+            if child.selected and not child.touched:
+                child.rotation = value
+    def on_scale(self, instance, value):
+        for child in self.drawing_canvas.children:
+            if child.selected and not child.touched:
+                child.scale = value
