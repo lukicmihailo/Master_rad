@@ -17,16 +17,6 @@ class ToolButton(ToggleButton):
 
     def draw(self, ds, x, y):
         pass
-
-class ToolStickman(ToolButton):
-    def draw(self, ds, x, y):
-        sm = StickMan(width=48, height=48)
-        sm.center = (x,y)
-        screen_manager = self.parent.uml_painter.manager
-        color_picker = screen_manager.color_picker
-        sm.canvas.before.add(Color(*color_picker.color))
-        ds.add_widget(sm)
-
 class ToolFigure(ToolButton):
     def draw(self, ds, x, y):
         (self.ix, self.iy) = (x,y)
@@ -64,6 +54,24 @@ class ToolFigure(ToolButton):
 
     def create_widget(self,ix,iy,fx,fy):
         pass
+
+class ToolStickman(ToolButton):
+    def draw(self, ds, x, y):
+        sm = StickMan(width=48, height=48)
+        sm.center = (x,y)
+        screen_manager = self.parent.uml_painter.manager
+        color_picker = screen_manager.color_picker
+        sm.canvas.before.add(Color(*color_picker.color))
+        ds.add_widget(sm)
+class ToolSimpleLine(ToolFigure):
+    pass
+#     def draw(self, ds, x, y):
+#         
+#     def on_touch_down(self, touch):
+#         touch.ud['simpleLine'] = Line(points=(touch.x, touch.y))
+#     def on_touch_move(self,touch):
+#         touch.ud['simpleLine'].points += [touch.x, touch.y]
+        
 
 class ToolLine(ToolFigure):
     def create_figure(self,ix,iy,fx,fy):
