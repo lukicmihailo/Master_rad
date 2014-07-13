@@ -1,28 +1,22 @@
-'''
-Created on Feb 22, 2014
-
-@author: mihailo
-'''
-#!/usr/bin/kivy
 import kivy
+kivy.require('1.7.0')
 from kivy.app import App
 from kivy.lang import Builder
-from kivy.uix.anchorlayout import AnchorLayout
+from kivy.uix.screenmanager import ScreenManager
 
-kivy.require('1.8.0')
-Builder.load_file('basicShapes.kv')
 Builder.load_file('toolbox.kv')
+Builder.load_file('umlpainterwidgets.kv')
 Builder.load_file('drawingcanvas.kv')
 Builder.load_file('toolbar.kv')
 Builder.load_file('statusbar.kv')
+Builder.load_file('umlpainter.kv')
 
-class UMLPainterFrame(AnchorLayout):
+class UmlPainterManager(ScreenManager):
     pass
 
-class UMLPainterApp(App):
-    title = 'UMLPainterApp'
+class UmlPainterManagerApp(App):
     def build(self):
-        return UMLPainterFrame()
+        return UmlPainterManager()
 
-if __name__ == '__main__':
-    UMLPainterApp().run()
+if __name__=="__main__":
+    UmlPainterManagerApp().run()

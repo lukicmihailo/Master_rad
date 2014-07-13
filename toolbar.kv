@@ -1,41 +1,21 @@
-#: import toolbar toolbar
-<ToolbarButton@Button>:
-	canvas:
-    	Color:
-        	rgba: 1, 0, 0, 0
-        Rectangle:
-        	pos: self.pos
-            size: self.size
-	
-<Toolbar>:
-	canvas:
-		Color:
-			rgba: 0,0,0,1
-		Rectangle:
-			pos: self.pos
-			size:self.size	
-	orientation: 'horizontal'
-	padding: 2
-	ToolbarButton:
-		text: 'Clear elements'
-		color: 0,0,0,1
-		on_press: root.clear(*args)
-	ToolbarButton:
-		text: 'Delete element'
-		color: 0,0,0,1
-		on_release: root.remove(*args)
-	ToggleButton:
-		text: 'Group'
-		color: 0,0,0,1
-		on_state: root.group(*args)
-	ToolbarButton:
-		text: 'Change color'
-		color: 0,0,0,1
-		on_press: root.color(*args)
-	ToolbarButton:
-		text: 'Gestures'
-		color: 0,0,0,1
-		on_state: root.gestures(*args)
-		
 
-		
+#:kivy 1.7.0
+#:import toolbar toolbar
+<ToolBar>:
+    orientation: 'horizontal'
+    padding: 2
+    Button:
+        text: 'Clear'
+        on_press: root.clear(*args)
+    Button:
+        text: 'Remove'
+        on_release: root.remove(*args)
+    ToggleButton:
+        text: 'Group'
+        on_state: root.group(*args)
+    Button:
+        text: 'Color'
+        on_press: root.color(*args)
+    ToggleButton:
+        text: 'Gestures'
+        on_state: root.gestures(*args)

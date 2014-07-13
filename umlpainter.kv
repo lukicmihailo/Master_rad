@@ -1,48 +1,40 @@
-#:kivy 1.8.0
-#:import kivy kivy
 
-<UMLPainterFrame>:
-	canvas:
-		Color:
-			rgba: 1,1,1,1
-		Rectangle:
-			pos: self.pos
-			size:self.size	
-	AnchorLayout:
-		anchor_x: 'left'
-		anchor_y: 'top'
-		ToolBox:
-			id: _tool_box
-			drawing_canvas: _drawing_canvas
-			uml_painter_frame: root
-			size_hint: None,None
-			width:50
-	AnchorLayout:
-		anchor_x: 'right'
-		anchor_y: 'top'
-		RelativeLayout:
-			size_hint: None,None
-			width: root.width - _tool_box.width
-			height: root.height - _toolbar.height - _status_bar.height
-			DrawingCanvas:
-				id: _drawing_canvas
-				status_bar: _status_bar
-				tool_bar: _toolbar
-				tool_box: _tool_box
-	AnchorLayout:
-		anchor_x: 'center'
-		anchor_y: 'bottom'
-		BoxLayout:
-			orientation: 'vertical'
-			Toolbar:
-				id: _toolbar
-				drawing_canvas: _drawing_canvas
-				uml_painter_frame: root
-				size_hint: 1,None
-				height: 48
-			StatusBar:
-				id: _status_bar
-				size_hint: 1,None
-				height: 24
-				
-		
+#:kivy 1.7.0
+<UMLPainter@Screen>:
+    name: 'uml_painter'
+    AnchorLayout:
+        anchor_x: 'left'
+        anchor_y: 'top'
+        ToolBox:
+            id: _tool_box
+            drawing_space: _drawing_space
+            uml_painter: root
+            size_hint: None,None
+            width: 100
+    AnchorLayout:
+        anchor_x: 'right'
+        anchor_y: 'top'
+        RelativeLayout:
+            size_hint: None,None
+            width: root.width - _tool_box.width
+            height: root.height - _tool_bar.height - _status_bar.height
+            DrawingCanvas:
+                id: _drawing_space
+                tool_bar: _tool_bar
+                tool_box: _tool_box
+                status_bar: _status_bar
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'bottom'
+        BoxLayout:
+            orientation: 'vertical'
+            ToolBar:
+                id: _tool_bar
+                drawing_space: _drawing_space
+                uml_painter: root
+                size_hint: 1,None
+                height: 48
+            StatusBar:
+                id: _status_bar
+                size_hint: 1,None
+                height: 24
