@@ -1,6 +1,6 @@
 # File name: statusbar.py
 import kivy
-kivy.require('1.7.0')
+kivy.require('1.8.0')
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import NumericProperty, ObjectProperty
 

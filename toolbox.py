@@ -1,6 +1,6 @@
 # File name: toolbox.py
 import kivy
-kivy.require('1.7.0')
+kivy.require('1.8.0')
 import math
 from kivy.uix.togglebutton import ToggleButton
 from kivy.graphics import Line, Color

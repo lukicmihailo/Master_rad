@@ -1,6 +1,6 @@
 
 import kivy
-kivy.require('1.7.0')
+kivy.require('1.8.0')
 from kivy.uix.scatter import Scatter
 from kivy.graphics import Line
 

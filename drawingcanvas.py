@@ -1,6 +1,6 @@
 
 import kivy
-kivy.require('1.7.0')
+kivy.require('1.8.0')
 from kivy.uix.stencilview import StencilView
 from kivy.gesture import Gesture, GestureDatabase
 from oblici import line45_str, circle_str, cross_str
