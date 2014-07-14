@@ -1,10 +1,14 @@
 # File name: toolbox.py
 import kivy
-kivy.require('1.8.0')
-import math
+from kivy.graphics import Line, Color, Rectangle, Point
 from kivy.uix.togglebutton import ToggleButton
-from kivy.graphics import Line, Color
+import math
+
+
 from umlpainterwidgets import StickMan, DraggableWidget
+
+
+kivy.require('1.8.0')
 
 class ToolButton(ToggleButton):
     def on_touch_down(self, touch):
@@ -17,6 +21,55 @@ class ToolButton(ToggleButton):
 
     def draw(self, ds, x, y):
         pass
+class ToolSimpleLine(ToggleButton):
+    def on_touch_down(self,touch):
+        ds = self.parent.drawing_space
+        if self.state == 'down' and ds.collide_point(touch.x, touch.y):
+            (x,y) = ds.to_widget(touch.x, touch.y)
+            self.draw(ds, x, y,touch)
+            return True
+        return super(ToolSimpleLine, self).on_touch_down(touch)
+    def draw(self,ds,x,y,touch):
+        (self.ix, self.iy) = (x,y)
+        screen_manager = self.parent.uml_painter.manager
+        color_picker = screen_manager.color_picker
+        with ds.canvas:
+            Color(*color_picker.color)
+            touch.ud['line']=self.create_figure(x,y)
+            self.figure = touch.ud['line']
+        ds.bind(on_touch_move=self.update_figure)
+        ds.bind(on_touch_up=self.end_figure)
+    def update_figure(self, ds, touch):
+        with ds.canvas:
+            touch.ud['line'].points += [touch.x,touch.y]
+            self.figure = touch.ud['line']
+    def end_figure(self, ds, touch):
+        ds.unbind(on_touch_move=self.update_figure)
+        ds.unbind(on_touch_up=self.end_figure)
+        self.widgetize(ds,self.ix,self.iy,touch.x,touch.y)#prosledjujemo kanvas, pocetne tacke, krajnje tacke
+
+    def widgetize(self,ds,ix,iy,fx,fy):
+        widget = self.create_widget(ix,iy,fx,fy)
+        (ix,iy) = widget.to_local(ix,iy,relative=True)
+        (fx,fy) = widget.to_local(fx,fy,relative=True)
+        screen_manager = self.parent.uml_painter.manager
+        color_picker = screen_manager.color_picker
+        widget.canvas.add(Color(*color_picker.color))
+        widget.canvas.add(self.create_figure(ix,iy))
+        ds.add_widget(widget)
+
+    def create_figure(self,x,y):
+        return Line(points=(x,y))
+#ovde treba srediti da pravi kvadrat koji ce uzimati max/min vrednosti svih pointa i od njih uzimati vrednosti
+    def create_widget(self,ix,iy,fx,fy):
+        pos = (min(ix, fx), min(iy, fy)) 
+        size = (abs(fx-ix), abs(fy-iy))
+        return DraggableWidget(pos = pos, size = size)
+    
+    
+    
+    
+        
 class ToolFigure(ToolButton):
     def draw(self, ds, x, y):
         (self.ix, self.iy) = (x,y)
@@ -63,16 +116,6 @@ class ToolStickman(ToolButton):
         color_picker = screen_manager.color_picker
         sm.canvas.before.add(Color(*color_picker.color))
         ds.add_widget(sm)
-class ToolSimpleLine(ToolFigure):
-    pass
-#     def draw(self, ds, x, y):
-#         
-#     def on_touch_down(self, touch):
-#         touch.ud['simpleLine'] = Line(points=(touch.x, touch.y))
-#     def on_touch_move(self,touch):
-#         touch.ud['simpleLine'].points += [touch.x, touch.y]
-        
-
 class ToolLine(ToolFigure):
     def create_figure(self,ix,iy,fx,fy):
         return Line(points=[ix, iy, fx, fy])

@@ -94,6 +94,9 @@ class DrawingCanvas(StencilView):
         cx = (self.ix + self.fx)/2.0
         cy = (self.iy + self.fy)/2.0
         self.tool_box.tool_stickman.draw(self,cx,cy)
+        
+    def add_simple_line(self,ix,iy,fx,fy):
+        self.tool_box.tool_simple_line.widgetize(self,ix,iy,fx,fy)
 
     def on_children(self, instance, value):
         self.status_bar.counter = len(self.children)
