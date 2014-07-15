@@ -21,7 +21,7 @@ class ToolButton(ToggleButton):
 
     def draw(self, ds, x, y):
         pass
-class ToolSimpleLine(ToggleButton):
+class ToolSimpleLine(ToolButton):
     def on_touch_down(self,touch):
         ds = self.parent.drawing_space
         if self.state == 'down' and ds.collide_point(touch.x, touch.y):
@@ -55,6 +55,7 @@ class ToolSimpleLine(ToggleButton):
         screen_manager = self.parent.uml_painter.manager
         color_picker = screen_manager.color_picker
         widget.canvas.add(Color(*color_picker.color))
+        #ovde ide deo za izracunavanje najmanje i najvece tacke
         widget.canvas.add(self.create_figure(ix,iy))
         ds.add_widget(widget)
 
