@@ -106,14 +106,12 @@ class ToolSimpleLine(ToolFigure):
         color_picker = screen_manager.color_picker
         with ds.canvas:
             Color(*color_picker.color)
-            self.linePoints += [x,y]
-            #self.figure=self.create_figure(x,y)
+            self.figure=self.create_figure(x,y)
         ds.bind(on_touch_move=self.update_figure)
         ds.bind(on_touch_up=self.end_figure)
     def update_figure(self, ds, touch):
         with ds.canvas:
-            #touch.ud['line'].points += [touch.x,touch.y]
-            self.linePoints += [touch.x,touch.y]#self.create_figure(touch.x,touch.y) #touch.ud['line']
+            self.figure = self.create_figure(touch.x,touch.y)
     def end_figure(self, ds, touch):
         ds.unbind(on_touch_move=self.update_figure)
         ds.unbind(on_touch_up=self.end_figure)
@@ -132,6 +130,7 @@ class ToolSimpleLine(ToolFigure):
         maxX = max(nizX)
         maxY = max(nizY)
 # do ovde se odredjuje
+        self.figure = self.create_figure(touch.x,touch.y)
         self.widgetize(ds,self.ix,self.iy,maxX,maxY)#prosledjujemo kanvas, pocetne tacke, krajnje tacke
  
     def widgetize(self,ds,ix,iy,fx,fy):
@@ -142,7 +141,7 @@ class ToolSimpleLine(ToolFigure):
         screen_manager = self.parent.uml_painter.manager
         color_picker = screen_manager.color_picker
         widget.canvas.add(Color(*color_picker.color))
-        widget.canvas.add(self.create_figure(ix,iy))
+        widget.canvas.add(self.figure)
         ds.add_widget(widget)
         self.linePoints=[]
     def create_figure(self,x,y):
