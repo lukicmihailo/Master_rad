@@ -88,7 +88,70 @@ class ToolLine(ToolFigure):
         size = (abs(fx-ix), abs(fy-iy))
         return DraggableWidget(pos = pos, size = size)
 
+class ToolMoveCanvas(ToolFigure):
+    
+    def __init__(self,**kwargs):
+        ToolFigure.__init__(self, **kwargs)
+        self.pocetnaX = 0
+        self.pocetnaY = 0
+    def on_touch_down(self,touch):
+        ds = self.parent.drawing_space
+        if self.state == 'down' and ds.collide_point(touch.x, touch.y):
+            (self.pocetnaX,self.pocetnaY) = ds.to_widget(touch.x, touch.y)
+            self.startMoveCanvas(ds, self.pocetnaX, self.pocetnaY,touch)
+            return True
+        return super(ToolMoveCanvas,self).on_touch_down(touch)
+    def startMoveCanvas(self,ds,x,y,touch):
+        ds.bind(on_touch_move=self.moveCanvas)
+        ds.bind(on_touch_up=self.endMoveCanvas)
+    def moveCanvas(self,ds,touch):
+        if ds.collide_point(touch.x, touch.y):
+            with ds.canvas:
+                self.izracunavanjePomeraja(touch,self.pocetnaX,self.pocetnaY,ds)
+    def endMoveCanvas(self,ds,touch):
+        with ds.canvas:
+            self.pocetnaX = 0
+            self.pocetnaY = 0
+            ds.unbind(on_touch_move=self.moveCanvas)
+            ds.unbind(on_touch_up=self.endMoveCanvas)
+    def izracunavanjePomeraja(self,touch,pocetnaX,pocetnaY,ds):
+        if pocetnaX != 0 and pocetnaY != 0:
+            #Pomeranje u desno
+            if pocetnaX < touch.x and pocetnaY == touch.y:
+                self.pomeriElemente(3,0,ds)
+            #Pomeranje u levo
+            if pocetnaX > touch.x and pocetnaY == touch.y:
+                self.pomeriElemente(-3,0,ds)
+            #Pomeranje gore
+            if pocetnaX == touch.x and pocetnaY < touch.y:
+                self.pomeriElemente(0,3,ds)
+            #Pomeranje dole
+            if pocetnaX == touch.x and pocetnaY > touch.y:
+                self.pomeriElemente(0,-3,ds)  
+            #Pomeranje gore desno
+            if pocetnaX < touch.x and pocetnaY < touch.y:
+                self.pomeriElemente(3,3,ds)
+            #Pomeranje gore levo
+            if pocetnaX > touch.x and pocetnaY < touch.y:
+                self.pomeriElemente(-3,3,ds)
+            #Pomeranje dole desno
+            if pocetnaX < touch.x and pocetnaY > touch.y:
+                self.pomeriElemente(3,-3,ds)   
+            #Pomeranje dole levo
+            if pocetnaX > touch.x and pocetnaY > touch.y:
+                self.pomeriElemente(-3,-3,ds)
+            self.pocetnaX= touch.x
+            self.pocetnaY = touch.y                                            
+    def pomeriElemente(self,vrednostX,vrednostY,ds):
+        for element in ds.children:
+            (x,y) = (element.x, element.y)
+            x += vrednostX
+            y += vrednostY
+            element.pos = (x,y)
+            
 
+
+    
 class ToolSimpleLine(ToolFigure):
     def __init__(self, **kwargs):
         ToolFigure.__init__(self, **kwargs)
