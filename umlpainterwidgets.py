@@ -7,9 +7,12 @@ from kivy.graphics import Line
 class DraggableWidget(Scatter):
     def __init__(self,  **kwargs):
         self.selected = None
+        self.linked = False
         self.touched = False
+        self.linkedElements = []
         super(DraggableWidget, self).__init__(**kwargs)
-
+    def addLinkElement(self,element):
+        self.linkedElements.append(element)
     def on_touch_down(self, touch):
         if self.collide_point(touch.x, touch.y):
             self.touched = True
@@ -31,6 +34,7 @@ class DraggableWidget(Scatter):
             go.translation = (self.center_x- self.ix, self.center_y - self.iy)
             self.ix = self.center_x
             self.iy = self.center_y
+            self.parent.repaintAllLinks(self,self.linkedElements)
 
     def on_rotation(self, instance, value):
         if self.selected and self.touched:

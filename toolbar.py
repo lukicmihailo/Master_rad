@@ -9,10 +9,20 @@ class ToolBar(BoxLayout):
     translation = ListProperty(None)
     rotation = NumericProperty(0)
     scale = NumericProperty(0)
-
+    def link(self,instance):
+        nizSelektovanihElemenata = []
+        for child in self.drawing_space.children:
+            if len(nizSelektovanihElemenata)<2:
+                if child.selected:
+                    nizSelektovanihElemenata.append(child)
+            else:
+                break
+        element1 = nizSelektovanihElemenata[0]
+        element2 = nizSelektovanihElemenata[1]
+        self.drawing_space.paint_links(element1,element2)
+        self.unselect_all()
     def clear(self, instance):
         self.drawing_space.clear_widgets()
-
     def remove(self, instance):
         ds = self.drawing_space
         if len(ds.children) > 0:

@@ -100,3 +100,11 @@ class DrawingCanvas(StencilView):
 
     def on_children(self, instance, value):
         self.status_bar.counter = len(self.children)
+    def repaintAllLinks(self,element1,povezaniElementi):
+        for child in povezaniElementi:
+            self.tool_box.tool_line.widgetize(self,element1.center_x,element1.center_y,child.center_x,child.center_y)
+                
+    def paint_links(self,element1,element2):
+        self.tool_box.tool_line.widgetize(self,element1.center_x,element1.center_y,element2.center_x,element2.center_y)
+        element1.addLinkElement(element2)
+        element2.addLinkElement(element1)

@@ -8,8 +8,11 @@
         text: 'Clear'
         on_press: root.clear(*args)
     Button:
-        text: 'Remove'
-        on_release: root.remove(*args)
+		text: 'Remove'
+		on_release: root.remove(*args)
+    Button:
+        text: 'Link'
+        on_release: root.link(*args)
     ToggleButton:
         text: 'Group'
         on_state: root.group(*args)
