@@ -17,10 +17,11 @@ class ToolBar(BoxLayout):
                     nizSelektovanihElemenata.append(child)
             else:
                 break
-        element1 = nizSelektovanihElemenata[0]
-        element2 = nizSelektovanihElemenata[1]
-        self.drawing_space.paint_links(element1,element2)
-        self.unselect_all()
+        if len(nizSelektovanihElemenata)==2:
+            element1 = nizSelektovanihElemenata[0]
+            element2 = nizSelektovanihElemenata[1]
+            self.drawing_space.paint_links(element1,element2)
+            self.unselect_all()
     def clear(self, instance):
         self.drawing_space.clear_widgets()
     def remove(self, instance):

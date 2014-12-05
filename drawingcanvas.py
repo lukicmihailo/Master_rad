@@ -22,7 +22,17 @@ class DrawingCanvas(StencilView):
         self.gdb.add_gesture(self.line315)
         self.gdb.add_gesture(self.circle)
         self.gdb.add_gesture(self.cross)
-
+        self.links = []
+    def addLink(self,link):
+        self.links.append(link)
+    def removeLink(self,link):
+        self.links.remove(link) 
+    def getLink(self,element1, element2):
+        for child in self.links:
+            if ( child.element1 == element1 and child.element2 == element2 ) or ( child.element1 == element2 and child.element2 == element1 ):
+                return child
+        return None
+                
     def activate(self):
         self.bind(on_touch_down=self.down,
                   on_touch_move=self.move,
@@ -100,11 +110,12 @@ class DrawingCanvas(StencilView):
 
     def on_children(self, instance, value):
         self.status_bar.counter = len(self.children)
+        
     def repaintAllLinks(self,element1,povezaniElementi):
         for child in povezaniElementi:
-            self.tool_box.tool_line.widgetize(self,element1.center_x,element1.center_y,child.center_x,child.center_y)
+            self.tool_box.tool_link.widgetize(self,element1,child)
                 
     def paint_links(self,element1,element2):
-        self.tool_box.tool_line.widgetize(self,element1.center_x,element1.center_y,element2.center_x,element2.center_y)
+        self.tool_box.tool_link.widgetize(self,element1,element2)
         element1.addLinkElement(element2)
         element2.addLinkElement(element1)

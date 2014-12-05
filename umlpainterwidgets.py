@@ -64,3 +64,11 @@ class DraggableWidget(Scatter):
 
 class StickMan(DraggableWidget):
     pass
+
+class Link(DraggableWidget):
+    def __init__(self,  **kwargs):
+        self.element1 = None
+        self.element2 = None
+        self.widgetLink = None
+        super(DraggableWidget, self).__init__(**kwargs)
+

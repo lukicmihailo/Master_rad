@@ -5,7 +5,7 @@ from kivy.uix.togglebutton import ToggleButton
 import math
 
 
-from umlpainterwidgets import StickMan, DraggableWidget
+from umlpainterwidgets import StickMan, DraggableWidget, Link
 
 
 kivy.require('1.8.0')
@@ -59,7 +59,37 @@ class ToolFigure(ToolButton):
 
     def create_widget(self,ix,iy,fx,fy):
         pass
+class ToolLink(ToolFigure):
+    def widgetize(self,ds,element1,element2):
+        link = ds.getLink(element1, element2)
+        if link != None:
+            ds.removeLink(link)
+            ds.remove_widget(link.widgetLink)
+        ix = element1.center_x
+        iy = element1.center_y
+        fx = element2.center_x
+        fy = element2.center_y
+        widget = self.create_widget(ix,iy,fx,fy)
+        (ix,iy) = widget.to_local(ix,iy,relative=True)
+        (fx,fy) = widget.to_local(fx,fy,relative=True)
+        screen_manager = self.parent.uml_painter.manager
+        color_picker = screen_manager.color_picker
+        widget.canvas.add(Color(*color_picker.color))
+        widget.canvas.add(self.create_figure(ix,iy,fx,fy))
+        ds.add_widget(widget)
+        link = Link()
+        link.element1 = element1
+        link.element2 = element2
+        link.widgetLink = widget
+        ds.addLink(link)
+    def create_figure(self,ix,iy,fx,fy):
+        return Line(points=[ix, iy, fx, fy])
 
+    def create_widget(self,ix,iy,fx,fy):
+        pos = (min(ix, fx), min(iy, fy)) 
+        size = (abs(fx-ix), abs(fy-iy))
+        return DraggableWidget(pos = pos, size = size)
+    
 class ToolStickman(ToolButton):
     def draw(self, ds, x, y):
         sm = StickMan(width=48, height=48)
