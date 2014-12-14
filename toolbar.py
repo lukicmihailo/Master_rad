@@ -9,6 +9,13 @@ class ToolBar(BoxLayout):
     translation = ListProperty(None)
     rotation = NumericProperty(0)
     scale = NumericProperty(0)
+    def zoomOut(self,instance):
+        for child in self.drawing_space.children:
+            print child.size_hint
+    def zoomIn(self,instance):
+        for child in self.drawing_space.children:
+            print child
+#             child.size_hint += (10,10)
     def link(self,instance):
         nizSelektovanihElemenata = []
         for child in self.drawing_space.children:

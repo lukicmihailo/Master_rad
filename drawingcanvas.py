@@ -105,17 +105,15 @@ class DrawingCanvas(StencilView):
         cy = (self.iy + self.fy)/2.0
         self.tool_box.tool_stickman.draw(self,cx,cy)
         
-    def add_simple_line(self,ix,iy,fx,fy):
-        self.tool_box.tool_simple_line.widgetize(self,ix,iy,fx,fy)
 
     def on_children(self, instance, value):
         self.status_bar.counter = len(self.children)
         
     def repaintAllLinks(self,element1,povezaniElementi):
         for child in povezaniElementi:
-            self.tool_box.tool_link.widgetize(self,element1,child)
+            self.tool_box.tool_line.widgetizeLink(self,element1,child)
                 
     def paint_links(self,element1,element2):
-        self.tool_box.tool_link.widgetize(self,element1,element2)
+        self.tool_box.tool_line.widgetizeLink(self,element1,element2)
         element1.addLinkElement(element2)
         element2.addLinkElement(element1)

@@ -18,28 +18,20 @@
     tool_circle: _tool_circle
     tool_line: _tool_line
     tool_stickman: _tool_stickman
-    tool_simple_line: _tool_simple_line
     tool_move_canvas: _tool_move_canvas
-    tool_link: _tool_link
     ToolMoveCanvas:
     	id: _tool_move_canvas
+    	background_normal: 'images/crnaRuka.jpg'
+		background_down: 'images/crvenaRuka.jpg'
     ToolCircle:
         id:  _tool_circle
-        canvas:
-            Line:
-                circle: 24,24,14
+        background_normal: 'images/crnaElipsa.png'
+		background_down: 'images/crvenaElipsa.png'
     ToolLine:
         id: _tool_line
-        canvas:
-            Line:
-                points: 10,10,38,38
+        background_normal: 'images/crnaLinija.png'
+		background_down: 'images/crvenaLinija.png'
     ToolStickman:
         id: _tool_stickman
-        StickMan:
-            pos_hint: {'center_x':.5,'center_y':.5}
-	ToolSimpleLine:
-		id: _tool_simple_line
-		background_normal: 'images/freeline.jpg'
-		background_down: 'images/freeline.jpg'
-	ToolLink:
-		id:_tool_link
+        background_normal: 'images/glisaCrn.png'
+		background_down: 'images/glisaCrven.png'

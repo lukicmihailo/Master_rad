@@ -3,6 +3,9 @@
 #:import toolbar toolbar
 <ToolBar>:
     orientation: 'horizontal'
+    canvas:
+    	Color:
+			rgba: 1, 1, 1, 1
     padding: 2
     Button:
         text: 'Clear'
@@ -16,6 +19,12 @@
     ToggleButton:
         text: 'Group'
         on_state: root.group(*args)
+    Button:
+        text: 'Zoom in'
+        on_press: root.zoomIn(*args)
+    Button:
+        text: 'Zoom out'
+        on_press: root.zoomOut(*args)
     Button:
         text: 'Color'
         on_press: root.color(*args)
