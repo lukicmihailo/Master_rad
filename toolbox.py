@@ -78,6 +78,15 @@ class ToolRectangle(ToolFigure):
         pos = (min(ix, fx), min(iy, fy)) 
         size = (abs(fx-ix), abs(fy-iy))   
         return DraggableWidget(pos = pos, size = size)
+
+class ToolEllipse(ToolFigure):
+    def create_figure(self,ix,iy,fx,fy):
+        return Line(ellipse=[ix,iy,fx-ix,fy-iy,0,360])
+
+    def create_widget(self,ix,iy,fx,fy):
+        pos = (min(ix, fx), min(iy, fy)) 
+        size = (abs(fx-ix), abs(fy-iy)) 
+        return DraggableWidget(pos = pos, size = size)    
     
 class ToolCircle(ToolFigure):
     def create_figure(self,ix,iy,fx,fy):
