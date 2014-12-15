@@ -6,6 +6,7 @@ import math
 
 
 from umlpainterwidgets import StickMan, DraggableWidget, Link
+from Crypto.Util.number import size
 
 
 kivy.require('1.8.0')
@@ -69,6 +70,15 @@ class ToolStickman(ToolButton):
         sm.canvas.before.add(Color(*color_picker.color))
         ds.add_widget(sm)
         
+class ToolRectangle(ToolFigure):
+    def create_figure(self,ix,iy,fx,fy):
+        return Line(rectangle=[ix,iy,fx-ix,fy-iy])
+
+    def create_widget(self,ix,iy,fx,fy):
+        pos = (min(ix, fx), min(iy, fy)) 
+        size = (abs(fx-ix), abs(fy-iy))   
+        return DraggableWidget(pos = pos, size = size)
+    
 class ToolCircle(ToolFigure):
     def create_figure(self,ix,iy,fx,fy):
         return Line(circle=[ix,iy,math.hypot(ix-fx,iy-fy)])
