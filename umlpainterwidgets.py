@@ -70,5 +70,7 @@ class Link(DraggableWidget):
         self.element1 = None
         self.element2 = None
         self.widgetLink = None
-        super(DraggableWidget, self).__init__(**kwargs)
+        super(DraggableWidget, self).__init__(do_rotation=False, do_scale=False, do_translation = False) 
+
+        
 

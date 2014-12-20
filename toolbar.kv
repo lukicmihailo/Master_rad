@@ -11,20 +11,14 @@
         text: 'Clear'
         on_press: root.clear(*args)
     Button:
-		text: 'Remove'
+		text: 'Remove selected'
 		on_release: root.remove(*args)
     Button:
         text: 'Link'
         on_release: root.link(*args)
     ToggleButton:
-        text: 'Group'
+        text: 'Select'
         on_state: root.group(*args)
-    Button:
-        text: 'Zoom in'
-        on_press: root.zoomIn(*args)
-    Button:
-        text: 'Zoom out'
-        on_press: root.zoomOut(*args)
     Button:
         text: 'Color'
         on_press: root.color(*args)
