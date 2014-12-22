@@ -106,6 +106,10 @@ class ToolLine(ToolFigure):
         pos = (min(ix, fx), min(iy, fy)) 
         size = (abs(fx-ix), abs(fy-iy))
         return DraggableWidget(pos = pos, size = size)
+    def create_widgetLink(self,ix,iy,fx,fy):
+        pos = (min(ix, fx), min(iy, fy)) 
+        size = (abs(fx-ix), abs(fy-iy))
+        return DraggableWidget(pos = pos, size = size, do_rotation=False, do_translation=False)
     def widgetizeLink(self,ds,element1,element2):
         link = ds.getLink(element1, element2)
         if link != None:
@@ -115,7 +119,7 @@ class ToolLine(ToolFigure):
         iy = element1.center_y
         fx = element2.center_x
         fy = element2.center_y
-        widget = self.create_widget(ix,iy,fx,fy)
+        widget = self.create_widgetLink(ix,iy,fx,fy)
         (ix,iy) = widget.to_local(ix,iy,relative=True)
         (fx,fy) = widget.to_local(fx,fy,relative=True)
         screen_manager = self.parent.uml_painter.manager

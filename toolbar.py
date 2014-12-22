@@ -29,6 +29,10 @@ class ToolBar(BoxLayout):
         if len(ds.children) > 0:
             for child in ds.children:
                 if child.selected:
+                    links = ds.getLinksForOneElement(child)
+                    if len(links) > 0:
+                        for link in links:
+                            ds.removeLink(link)
                     ds.remove_widget(child)
 
     def group(self, instance, value):

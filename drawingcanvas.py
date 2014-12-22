@@ -29,13 +29,19 @@ class DrawingCanvas(StencilView):
     def addLink(self,link):
         self.links.append(link)
     def removeLink(self,link):
+        self.remove_widget(link.widgetLink)
         self.links.remove(link) 
     def getLink(self,element1, element2):
         for child in self.links:
             if ( child.element1 == element1 and child.element2 == element2 ) or ( child.element1 == element2 and child.element2 == element1 ):
                 return child
         return None
-                
+    def getLinksForOneElement(self,element):
+        tempLinks = []
+        for child in self.links:
+            if ( child.element1 == element or child.element2 == element ):
+                tempLinks.append(child)
+        return tempLinks            
     def activate(self):
         self.bind(on_touch_down=self.down,
                   on_touch_move=self.move,
