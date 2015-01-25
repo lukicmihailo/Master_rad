@@ -162,29 +162,9 @@ class ToolMoveCanvas(ToolFigure):
     def izracunavanjePomeraja(self,touch,pocetnaX,pocetnaY,ds):
         if pocetnaX != 0 and pocetnaY != 0:
             #Pomeranje u desno
-            if pocetnaX < touch.x and pocetnaY == touch.y:
-                self.pomeriElemente(3,0,ds)
-            #Pomeranje u levo
-            if pocetnaX > touch.x and pocetnaY == touch.y:
-                self.pomeriElemente(-3,0,ds)
-            #Pomeranje gore
-            if pocetnaX == touch.x and pocetnaY < touch.y:
-                self.pomeriElemente(0,3,ds)
-            #Pomeranje dole
-            if pocetnaX == touch.x and pocetnaY > touch.y:
-                self.pomeriElemente(0,-3,ds)  
-            #Pomeranje gore desno
-            if pocetnaX < touch.x and pocetnaY < touch.y:
-                self.pomeriElemente(3,3,ds)
-            #Pomeranje gore levo
-            if pocetnaX > touch.x and pocetnaY < touch.y:
-                self.pomeriElemente(-3,3,ds)
-            #Pomeranje dole desno
-            if pocetnaX < touch.x and pocetnaY > touch.y:
-                self.pomeriElemente(3,-3,ds)   
-            #Pomeranje dole levo
-            if pocetnaX > touch.x and pocetnaY > touch.y:
-                self.pomeriElemente(-3,-3,ds)
+            pomerajX = touch.x - pocetnaX
+            pomerajY = touch.y - pocetnaY
+            self.pomeriElemente(pomerajX,pomerajY,ds)
             self.pocetnaX= touch.x
             self.pocetnaY = touch.y                                            
     def pomeriElemente(self,vrednostX,vrednostY,ds):
