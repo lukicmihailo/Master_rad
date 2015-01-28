@@ -60,7 +60,87 @@ class ToolFigure(ToolButton):
 
     def create_widget(self,ix,iy,fx,fy):
         pass
-    
+  
+class ToolSimpleLine(ToolFigure):   
+    pocetnaTacka = None
+    krajnjaTacka = None
+    tacke = []
+    tackeX = []
+    tackeY = []
+    def on_touch_down(self, touch):
+        ds = self.parent.drawing_space
+        if self.state == 'down' and ds.collide_point(touch.x, touch.y):
+            (x,y) = ds.to_widget(touch.x, touch.y)
+            self.pocetnaTacka = (touch.x, touch.y)
+            self.tacke += self.pocetnaTacka
+            self.tackeX += [x]
+            self.tackeY += [y]
+            self.draw(ds, x, y)
+            return True
+        return super(ToolButton, self).on_touch_down(touch)
+    def draw(self, ds, x, y):
+        (self.ix, self.iy) = (x,y)
+        screen_manager = self.parent.uml_painter.manager
+        color_picker = screen_manager.color_picker
+        with ds.canvas:
+            Color(*color_picker.color)
+            self.figure=self.create_figure(x,y,0,0)
+        ds.bind(on_touch_move=self.update_figure)
+        ds.bind(on_touch_up=self.end_figure)
+    def update_figure(self, ds, touch):
+        ds.canvas.remove(self.figure)
+        with ds.canvas:
+            self.figure = self.create_figure(self.ix, self.iy,touch.x,touch.y)
+    def end_figure(self, ds, touch):
+        ds.unbind(on_touch_move=self.update_figure)
+        ds.unbind(on_touch_up=self.end_figure)
+        ds.canvas.remove(self.figure)
+        self.krajnjaTacka = (touch.x , touch.y)
+        self.widgetize(ds,self.ix,self.iy,touch.x,touch.y)
+        self.pocetnaTacka = None
+        self.krajnjaTacka = None
+        self.tacke = []
+        self.tackeX = []
+        self.tackeY = []
+    def widgetize(self,ds,ix,iy,fx,fy):
+        widget = self.create_widget(ix,iy,fx,fy)
+        (ix,iy) = widget.to_local(ix,iy,relative=True)
+        (fx,fy) = widget.to_local(fx,fy,relative=True)
+        screen_manager = self.parent.uml_painter.manager
+        color_picker = screen_manager.color_picker
+        widget.canvas.add(Color(*color_picker.color))
+        widget.canvas.add(self.create_figure(ix,iy,fx,fy))
+        ds.add_widget(widget)
+    def create_figure(self,ix,iy,fx,fy):
+        if(fx != 0 and fy != 0):
+            self.tacke += (fx,fy)
+            self.tackeX += [fx]
+            self.tackeY += [fy]
+        return Line(points=self.tacke)
+    def create_widget(self,ix,iy,fx,fy):
+        minX = self.getMinX()
+        maxX = self.getMaxX()
+        minY = self.getMinY()
+        maxY = self.getMaxY()
+        pos = (self.getMinX(), self.getMinY())
+        print self.pocetnaTacka
+        print pos
+        size = (abs(maxX-minX), abs(maxY-minY))
+        return DraggableWidget(pos = pos, size = size)
+    def getMinX(self):
+        minX = min(self.tackeX)
+        return minX
+    def getMaxX(self):
+        maxX = max(self.tackeX)
+        return maxX
+    def getMinY(self):
+        minY = min(self.tackeY)
+        return minY
+    def getMaxY(self):
+        maxY = max(self.tackeY)
+        return maxY
+      
+     
 class ToolStickman(ToolButton):
     def draw(self, ds, x, y):
         sm = StickMan(width=48, height=48)
@@ -161,7 +241,6 @@ class ToolMoveCanvas(ToolFigure):
             ds.unbind(on_touch_up=self.endMoveCanvas)
     def izracunavanjePomeraja(self,touch,pocetnaX,pocetnaY,ds):
         if pocetnaX != 0 and pocetnaY != 0:
-            #Pomeranje u desno
             pomerajX = touch.x - pocetnaX
             pomerajY = touch.y - pocetnaY
             self.pomeriElemente(pomerajX,pomerajY,ds)
