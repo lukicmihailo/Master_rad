@@ -72,7 +72,7 @@ class ToolSimpleLine(ToolFigure):
         if self.state == 'down' and ds.collide_point(touch.x, touch.y):
             (x,y) = ds.to_widget(touch.x, touch.y)
             self.pocetnaTacka = (touch.x, touch.y)
-            self.tacke += self.pocetnaTacka
+#             self.tacke += self.pocetnaTacka
             self.tackeX += [x]
             self.tackeY += [y]
             self.draw(ds, x, y)
@@ -90,7 +90,9 @@ class ToolSimpleLine(ToolFigure):
     def update_figure(self, ds, touch):
         ds.canvas.remove(self.figure)
         with ds.canvas:
-            self.figure = self.create_figure(self.ix, self.iy,touch.x,touch.y)
+            widget = self.create_widget(self.ix,self.iy,touch.x,touch.y)
+            (fx,fy) = widget.to_local(touch.x,touch.y,relative=True)
+            self.figure = self.create_figure(self.ix, self.iy,fx,fy)
     def end_figure(self, ds, touch):
         ds.unbind(on_touch_move=self.update_figure)
         ds.unbind(on_touch_up=self.end_figure)
@@ -109,7 +111,7 @@ class ToolSimpleLine(ToolFigure):
         screen_manager = self.parent.uml_painter.manager
         color_picker = screen_manager.color_picker
         widget.canvas.add(Color(*color_picker.color))
-        widget.canvas.add(self.create_figure(ix,iy,fx,fy))
+        widget.canvas.add(self.create_figure(ix,iy,0,0))
         ds.add_widget(widget)
     def create_figure(self,ix,iy,fx,fy):
         if(fx != 0 and fy != 0):
