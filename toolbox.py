@@ -90,8 +90,9 @@ class ToolSimpleLine(ToolFigure):
     def update_figure(self, ds, touch):
         ds.canvas.remove(self.figure)
         with ds.canvas:
-            widget = self.create_widget(self.ix,self.iy,touch.x,touch.y)
-            (fx,fy) = widget.to_local(touch.x,touch.y,relative=True)
+            if(touch.x != self.ix and touch.y != self.iy):
+                widget = self.create_widget(self.ix,self.iy,touch.x,touch.y)
+                (fx,fy) = widget.to_local(touch.x,touch.y,relative=True)
             self.figure = self.create_figure(self.ix, self.iy,fx,fy)
     def end_figure(self, ds, touch):
         ds.unbind(on_touch_move=self.update_figure)
