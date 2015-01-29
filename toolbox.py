@@ -72,7 +72,7 @@ class ToolSimpleLine(ToolFigure):
         if self.state == 'down' and ds.collide_point(touch.x, touch.y):
             (x,y) = ds.to_widget(touch.x, touch.y)
             self.pocetnaTacka = (touch.x, touch.y)
-#             self.tacke += self.pocetnaTacka
+            self.tacke += (x,y)
             self.tackeX += [x]
             self.tackeY += [y]
             self.draw(ds, x, y)
@@ -90,9 +90,7 @@ class ToolSimpleLine(ToolFigure):
     def update_figure(self, ds, touch):
         ds.canvas.remove(self.figure)
         with ds.canvas:
-            widget = self.create_widget(self.ix,self.iy,touch.x,touch.y)
-            (fx,fy) = widget.to_local(touch.x,touch.y,relative=True)
-            self.figure = self.create_figure(self.ix, self.iy,fx,fy)
+            self.figure = self.create_figure(self.ix, self.iy,touch.x,touch.y)
     def end_figure(self, ds, touch):
         ds.unbind(on_touch_move=self.update_figure)
         ds.unbind(on_touch_up=self.end_figure)
@@ -115,6 +113,8 @@ class ToolSimpleLine(ToolFigure):
         ds.add_widget(widget)
     def create_figure(self,ix,iy,fx,fy):
         if(fx != 0 and fy != 0):
+            widget = self.create_widget(self.ix,self.iy,fx,fy)
+            (fx,fy) = widget.to_local(fx,fy,relative=True)
             self.tacke += (fx,fy)
             self.tackeX += [fx]
             self.tackeY += [fy]
@@ -125,8 +125,6 @@ class ToolSimpleLine(ToolFigure):
         minY = self.getMinY()
         maxY = self.getMaxY()
         pos = (self.getMinX(), self.getMinY())
-        print self.pocetnaTacka
-        print pos
         size = (abs(maxX-minX), abs(maxY-minY))
         return DraggableWidget(pos = pos, size = size)
     def getMinX(self):
