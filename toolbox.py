@@ -104,43 +104,40 @@ class ToolSimpleLine(ToolFigure):
         self.tackeY = []
     def widgetize(self,ds,ix,iy,fx,fy):
         widget = self.create_widget(ix,iy,fx,fy)
-        (ix,iy) = widget.to_local(ix,iy,relative=True)
-        (fx,fy) = widget.to_local(fx,fy,relative=True)
+        self.changeCoordinates(widget)
         screen_manager = self.parent.uml_painter.manager
         color_picker = screen_manager.color_picker
         widget.canvas.add(Color(*color_picker.color))
         widget.canvas.add(self.create_figure(ix,iy,0,0))
         ds.add_widget(widget)
+    def changeCoordinates(self,widget):
+        velicinaNiza = len(self.tacke)
+        for i in range(0,velicinaNiza-1,2):
+            self.tacke[i] = self.tacke[i] - widget.x
+        for i in range(1,velicinaNiza,2):
+            self.tacke[i] = self.tacke[i] - widget.y
+        velicinaNiza = len(self.tackeX)
+        for i in range(0,velicinaNiza,1):
+            self.tackeX[i] = self.tackeX[i] - widget.x
+        for i in range(0,velicinaNiza,1):
+            self.tackeY[i] = self.tackeY[i] - widget.x
+#             nizX.append(linePoints[i])
+
     def create_figure(self,ix,iy,fx,fy):
         if(fx != 0 and fy != 0):
-            widget = self.create_widget(self.ix,self.iy,fx,fy)
-            (fx,fy) = widget.to_local(fx,fy,relative=True)
             self.tacke += (fx,fy)
             self.tackeX += [fx]
             self.tackeY += [fy]
         return Line(points=self.tacke)
     def create_widget(self,ix,iy,fx,fy):
-        minX = self.getMinX()
-        maxX = self.getMaxX()
-        minY = self.getMinY()
-        maxY = self.getMaxY()
-        pos = (self.getMinX(), self.getMinY())
+        minX = min(self.tackeX)
+        maxX = max(self.tackeX)
+        minY = min(self.tackeY)
+        maxY = max(self.tackeY)
+        pos = (minX, minY)
         size = (abs(maxX-minX), abs(maxY-minY))
         return DraggableWidget(pos = pos, size = size)
-    def getMinX(self):
-        minX = min(self.tackeX)
-        return minX
-    def getMaxX(self):
-        maxX = max(self.tackeX)
-        return maxX
-    def getMinY(self):
-        minY = min(self.tackeY)
-        return minY
-    def getMaxY(self):
-        maxY = max(self.tackeY)
-        return maxY
-      
-     
+        
 class ToolStickman(ToolButton):
     def draw(self, ds, x, y):
         sm = StickMan(width=48, height=48)
