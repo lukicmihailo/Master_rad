@@ -20,6 +20,9 @@
         text: 'Select'
         on_state: root.group(*args)
     Button:
+        text: 'Create widget'
+        on_press: root.create_widget_toolbar(*args)    
+    Button:
         text: 'Color'
         on_press: root.color(*args)
     ToggleButton:

@@ -1,8 +1,12 @@
 
 import kivy
-kivy.require('1.8.0')
-from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import NumericProperty, ListProperty
+from kivy.uix.boxlayout import BoxLayout
+
+from toolbox import ToolFigure, ToolButton, ToolUserObject
+
+
+kivy.require('1.8.0')
 
 class ToolBar(BoxLayout):
     group_mode = False
@@ -44,7 +48,19 @@ class ToolBar(BoxLayout):
 
     def color(self, instance):
         self.uml_painter.manager.current = 'colorscreen'
-
+    def create_widget_toolbar(self,instance):
+        nizSelektovanihElemenata = []
+        for child in self.drawing_space.children:
+            if len(nizSelektovanihElemenata)<1:
+                if child.selected:
+                    nizSelektovanihElemenata.append(child)
+            else:
+                break
+        if len(nizSelektovanihElemenata)==1:
+            newObject = ToolUserObject()
+            element1 = nizSelektovanihElemenata[0]
+            newObject.setObject(element1.objectPoints, element1.objectPointsX,element1.objectPointsY)
+            self.tool_box.add_widget(newObject)
     def gestures(self, instance, value):
         if value == 'down':
             self.drawing_space.activate()

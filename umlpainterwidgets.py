@@ -10,6 +10,9 @@ class DraggableWidget(Scatter):
         self.linked = False
         self.touched = False
         self.linkedElements = []
+        self.objectPoints = []
+        self.objectPointsX = []
+        self.objectPointsY = []
         super(DraggableWidget, self).__init__(**kwargs)
     def addLinkElement(self,element):
         self.linkedElements.append(element)
@@ -63,6 +66,9 @@ class DraggableWidget(Scatter):
             self.selected = None
 
 class StickMan(DraggableWidget):
+    pass
+
+class UserObject(DraggableWidget):
     pass
 
 class Link(DraggableWidget):

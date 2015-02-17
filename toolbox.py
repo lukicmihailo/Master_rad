@@ -1,12 +1,10 @@
 # File name: toolbox.py
 import kivy
-from kivy.graphics import Line, Color, Rectangle, Point
+from kivy.graphics import Line, Color
 from kivy.uix.togglebutton import ToggleButton
 import math
 
-
-from umlpainterwidgets import StickMan, DraggableWidget, Link
-from Crypto.Util.number import size
+from umlpainterwidgets import StickMan, DraggableWidget, Link, UserObject
 
 
 kivy.require('1.8.0')
@@ -60,7 +58,33 @@ class ToolFigure(ToolButton):
 
     def create_widget(self,ix,iy,fx,fy):
         pass
-  
+class ToolUserObject(ToolButton):
+    userObjectPoints = []
+    userObjectPointsX = []
+    userObjectPointsY = []
+    def setObject(self,points, pointsX,pointsY):
+        self.userObjectPoints = points
+        self.userObjectPointsX = pointsX
+        self.userObjectPointsY = pointsY
+    def draw(self, ds, x, y):
+        screen_manager = self.parent.uml_painter.manager
+        color_picker = screen_manager.color_picker
+        widget = self.createWidget()
+        widget.center = (x,y)
+        widget.canvas.add(Color(*color_picker.color))
+        widget.canvas.add(self.create_figure())
+        ds.add_widget(widget)
+    def create_figure(self):
+        return Line(points=self.userObjectPoints)
+    def createWidget(self):
+        minX = min(self.userObjectPointsX)
+        maxX = max(self.userObjectPointsX)
+        minY = min(self.userObjectPointsY)
+        maxY = max(self.userObjectPointsY)
+        pos = (minX, minY)
+        size = (abs(maxX-minX), abs(maxY-minY))
+        newObject = DraggableWidget(pos = pos, size = size)
+        return newObject
 class ToolSimpleLine(ToolFigure):   
     pocetnaTacka = None
     krajnjaTacka = None
@@ -136,9 +160,13 @@ class ToolSimpleLine(ToolFigure):
         maxY = max(self.tackeY)
         pos = (minX, minY)
         size = (abs(maxX-minX), abs(maxY-minY))
-        return DraggableWidget(pos = pos, size = size)
+        newObject = DraggableWidget(pos = pos, size = size)
+        newObject.objectPoints = self.tacke
+        newObject.objectPointsX = self.tackeX
+        newObject.objectPointsY = self.tackeY
+        return newObject
         
-class ToolStickman(ToolButton):
+class ToolStickman(ToolFigure):
     def draw(self, ds, x, y):
         sm = StickMan(width=48, height=48)
         sm.center = (x,y)
