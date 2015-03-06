@@ -2,6 +2,7 @@
 import kivy
 from kivy.graphics import Line, Color
 from kivy.uix.togglebutton import ToggleButton
+from kivy.uix.widget import Widget
 import math
 
 from umlpainterwidgets import StickMan, DraggableWidget, Link, UserObject
@@ -62,10 +63,59 @@ class ToolUserObject(ToolButton):
     userObjectPoints = []
     userObjectPointsX = []
     userObjectPointsY = []
+    objectIconPoints = []
+    objectIconPointsX = []
+    objectIconPointsY = []
     def setObject(self,points, pointsX,pointsY):
         self.userObjectPoints = points
         self.userObjectPointsX = pointsX
         self.userObjectPointsY = pointsY
+    def setImage(self,iconPoints,iconPointsX,iconPointsY):
+        self.objectIconPoints = iconPoints
+        self.objectIconPointsX = iconPointsX
+        self.objectIconPointsY = iconPointsY
+        maxX = max(self.objectIconPointsX)
+        maxY = max(self.objectIconPointsY)
+        if maxX > 40 or maxY > 40:
+            self.smallerIcon()
+        else:
+            self.largerIcon()
+        widget = Widget()
+        widget.canvas.add(Line(points = self.objectIconPoints))
+        self.add_widget(widget)
+    def smallerIcon(self):
+        maxX = max(self.objectIconPointsX)
+        maxY = max(self.objectIconPointsY)
+        while (maxX > 40 and maxY > 40):
+            velicinaNiza = len(self.objectIconPoints)
+            for i in range(0,velicinaNiza,1):
+                self.objectIconPoints[i] = self.objectIconPoints[i] * 0.1
+            self.getXArray()
+            self.getYArray()
+            maxX = max(self.objectIconPointsX)
+            maxY = max(self.objectIconPointsY)
+    def largerIcon(self):
+        maxX = max(self.objectIconPointsX)
+        maxY = max(self.objectIconPointsY)
+        while (maxX < 40 and maxY < 40):
+            velicinaNiza = len(self.objectIconPoints)
+            for i in range(0,velicinaNiza,1):
+                self.objectIconPoints[i] = self.objectIconPoints[i] * 1.1
+            self.getXArray()
+            self.getYArray()
+            maxX = max(self.objectIconPointsX)
+            maxY = max(self.objectIconPointsY)
+    
+    def getXArray(self):
+        self.objectIconPointsX = []
+        velicinaNiza = len(self.objectIconPoints)
+        for i in range(0,velicinaNiza-1,2):
+            self.objectIconPointsX += [self.objectIconPoints[i]]
+    def getYArray(self):
+        self.objectIconPointsY = []
+        velicinaNiza = len(self.objectIconPoints)
+        for i in range(1,velicinaNiza,2):
+            self.objectIconPointsY += [self.objectIconPoints[i]]
     def draw(self, ds, x, y):
         screen_manager = self.parent.uml_painter.manager
         color_picker = screen_manager.color_picker

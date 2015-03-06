@@ -60,6 +60,8 @@ class ToolBar(BoxLayout):
             newObject = ToolUserObject()
             element1 = nizSelektovanihElemenata[0]
             newObject.setObject(element1.objectPoints, element1.objectPointsX,element1.objectPointsY)
+            elementIcon = nizSelektovanihElemenata[0]
+            newObject.setImage(elementIcon.objectPoints, elementIcon.objectPointsX,elementIcon.objectPointsY)
             self.tool_box.add_widget(newObject)
     def gestures(self, instance, value):
         if value == 'down':
