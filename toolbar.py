@@ -57,10 +57,11 @@ class ToolBar(BoxLayout):
             else:
                 break
         if len(nizSelektovanihElemenata)==1:
-            newObject = ToolUserObject()
             element1 = nizSelektovanihElemenata[0]
-            newObject.setObject(element1.objectPoints, element1.objectPointsX,element1.objectPointsY)
             elementIcon = nizSelektovanihElemenata[0]
+            newObject = ToolUserObject()
+            newObject.setParent(self.tool_box)
+            newObject.setObject(element1.objectPoints, element1.objectPointsX,element1.objectPointsY)
             newObject.setImage(elementIcon.objectPoints, elementIcon.objectPointsX,elementIcon.objectPointsY)
             self.tool_box.add_widget(newObject)
     def gestures(self, instance, value):

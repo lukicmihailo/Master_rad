@@ -66,30 +66,41 @@ class ToolUserObject(ToolButton):
     objectIconPoints = []
     objectIconPointsX = []
     objectIconPointsY = []
+    parentToolBox = None
+    def setParent(self,parent1):
+        self.parentToolBox = parent1       
     def setObject(self,points, pointsX,pointsY):
         self.userObjectPoints = points
         self.userObjectPointsX = pointsX
         self.userObjectPointsY = pointsY
     def setImage(self,iconPoints,iconPointsX,iconPointsY):
+        screen_manager = self.parentToolBox.uml_painter.manager
+        color_picker = screen_manager.color_picker
         self.objectIconPoints = iconPoints
         self.objectIconPointsX = iconPointsX
         self.objectIconPointsY = iconPointsY
         maxX = max(self.objectIconPointsX)
         maxY = max(self.objectIconPointsY)
-        if maxX > 40 or maxY > 40:
+        if maxX > 35 or maxY > 35:
             self.smallerIcon()
         else:
             self.largerIcon()
+        self.moveIconToCenter()
         widget = Widget()
+        widget.canvas.add(Color(*color_picker.color))
         widget.canvas.add(Line(points = self.objectIconPoints))
         self.add_widget(widget)
+    def moveIconToCenter(self):
+        velicinaNiza = len(self.objectIconPoints)
+        for i in range(0,velicinaNiza,1):
+            self.objectIconPoints[i] = self.objectIconPoints[i] + 5     
     def smallerIcon(self):
         maxX = max(self.objectIconPointsX)
         maxY = max(self.objectIconPointsY)
-        while (maxX > 40 and maxY > 40):
+        while (maxX > 35 and maxY > 35):
             velicinaNiza = len(self.objectIconPoints)
             for i in range(0,velicinaNiza,1):
-                self.objectIconPoints[i] = self.objectIconPoints[i] * 0.1
+                self.objectIconPoints[i] = self.objectIconPoints[i] * 0.9
             self.getXArray()
             self.getYArray()
             maxX = max(self.objectIconPointsX)
@@ -97,10 +108,10 @@ class ToolUserObject(ToolButton):
     def largerIcon(self):
         maxX = max(self.objectIconPointsX)
         maxY = max(self.objectIconPointsY)
-        while (maxX < 40 and maxY < 40):
+        while (maxX < 35 and maxY < 35):
             velicinaNiza = len(self.objectIconPoints)
             for i in range(0,velicinaNiza,1):
-                self.objectIconPoints[i] = self.objectIconPoints[i] * 1.1
+                self.objectIconPoints[i] = self.objectIconPoints[i] * 1.01
             self.getXArray()
             self.getYArray()
             maxX = max(self.objectIconPointsX)
