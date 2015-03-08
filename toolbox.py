@@ -69,10 +69,15 @@ class ToolUserObject(ToolButton):
     parentToolBox = None
     def setParent(self,parent1):
         self.parentToolBox = parent1       
-    def setObject(self,points, pointsX,pointsY):
-        self.userObjectPoints = points
-        self.userObjectPointsX = pointsX
-        self.userObjectPointsY = pointsY
+    def setObject(self,points, pointsX,pointsY):     
+        self.userObjectPoints = points[:]
+        self.userObjectPointsX = pointsX[:]
+        self.userObjectPointsY = pointsY[:]
+        temp_points = points[:]
+        temp_pointsX = pointsX[:]
+        temp_pointsY = pointsY[:]
+        self.setImage(temp_points, temp_pointsX,temp_pointsY)    
+
     def setImage(self,iconPoints,iconPointsX,iconPointsY):
         screen_manager = self.parentToolBox.uml_painter.manager
         color_picker = screen_manager.color_picker
@@ -81,15 +86,15 @@ class ToolUserObject(ToolButton):
         self.objectIconPointsY = iconPointsY
         maxX = max(self.objectIconPointsX)
         maxY = max(self.objectIconPointsY)
-        if maxX > 35 or maxY > 35:
+        if maxX > 48 or maxY > 48:
             self.smallerIcon()
         else:
             self.largerIcon()
         self.moveIconToCenter()
-        widget = Widget()
-        widget.canvas.add(Color(*color_picker.color))
-        widget.canvas.add(Line(points = self.objectIconPoints))
-        self.add_widget(widget)
+        widgetIcon = Widget()
+        widgetIcon.canvas.add(Color(*color_picker.color))
+        widgetIcon.canvas.add(Line(points = self.objectIconPoints))
+        self.add_widget(widgetIcon)
     def moveIconToCenter(self):
         velicinaNiza = len(self.objectIconPoints)
         for i in range(0,velicinaNiza,1):
