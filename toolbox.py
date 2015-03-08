@@ -76,7 +76,7 @@ class ToolUserObject(ToolButton):
         temp_points = points[:]
         temp_pointsX = pointsX[:]
         temp_pointsY = pointsY[:]
-        self.setImage(temp_points, temp_pointsX,temp_pointsY)    
+        self.setImage(temp_points,temp_pointsX,temp_pointsY)    
 
     def setImage(self,iconPoints,iconPointsX,iconPointsY):
         screen_manager = self.parentToolBox.uml_painter.manager
@@ -86,7 +86,7 @@ class ToolUserObject(ToolButton):
         self.objectIconPointsY = iconPointsY
         maxX = max(self.objectIconPointsX)
         maxY = max(self.objectIconPointsY)
-        if maxX > 48 or maxY > 48:
+        if maxX > 45 or maxY > 45:
             self.smallerIcon()
         else:
             self.largerIcon()
@@ -102,7 +102,7 @@ class ToolUserObject(ToolButton):
     def smallerIcon(self):
         maxX = max(self.objectIconPointsX)
         maxY = max(self.objectIconPointsY)
-        while (maxX > 35 and maxY > 35):
+        while (maxX > 35 or maxY > 35):
             velicinaNiza = len(self.objectIconPoints)
             for i in range(0,velicinaNiza,1):
                 self.objectIconPoints[i] = self.objectIconPoints[i] * 0.9
@@ -113,7 +113,7 @@ class ToolUserObject(ToolButton):
     def largerIcon(self):
         maxX = max(self.objectIconPointsX)
         maxY = max(self.objectIconPointsY)
-        while (maxX < 35 and maxY < 35):
+        while (maxX < 35 or maxY < 35):
             velicinaNiza = len(self.objectIconPoints)
             for i in range(0,velicinaNiza,1):
                 self.objectIconPoints[i] = self.objectIconPoints[i] * 1.01
