@@ -77,7 +77,6 @@ class ToolUserObject(ToolButton):
         temp_pointsX = pointsX[:]
         temp_pointsY = pointsY[:]
         self.setImage(temp_points,temp_pointsX,temp_pointsY)    
-
     def setImage(self,iconPoints,iconPointsX,iconPointsY):
         screen_manager = self.parentToolBox.uml_painter.manager
         color_picker = screen_manager.color_picker

@@ -5,6 +5,9 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.popup import Popup
 import os
+import pickle
+
+from toolbox import ToolUserObject
 
 
 kivy.require('1.8.0')
@@ -19,8 +22,10 @@ class StatusBar(BoxLayout):
     def save_toolbar(self, instance):
         self.type = 'Toolbar'
         self.show_save()
+    def load_toolbar(self, instance):
+        self.type = 'Toolbar'
+        self.show_load()
         
-
     def show_load(self):
         content = LoadDialog(load=self.load, cancel=self.dismiss_popup)
         self._popup = Popup(title="Load file", content=content, size_hint=(0.9, 0.9))
@@ -30,8 +35,13 @@ class StatusBar(BoxLayout):
         self._popup = Popup(title="Save file", content=content,size_hint=(0.9, 0.9))
         self._popup.open()
     def load(self, path, filename):
-        with open(os.path.join(path, filename[0])) as stream:
-            self.text_input.text = stream.read()
+        if self.type == 'Toolbar':
+            with open('toolbar.pkl', 'rb') as input:
+                userToolButton = pickle.load(input)
+                newObject = ToolUserObject()
+                newObject.setParent(self.tool_box)
+                newObject.setObject(userToolButton.userObjectPoints, userToolButton.userObjectPointsX,userToolButton.userObjectPointsY)
+                self.tool_box.add_widget(newObject)
         self.dismiss_popup()
     def save(self, path, filename):
         if self.type == 'Diagram':
@@ -40,15 +50,24 @@ class StatusBar(BoxLayout):
             ds = self.drawing_space
             ds.export_to_png(filename=filename)
         elif self.type == 'Toolbar': 
-            pass  
+            with open('toolbar.pkl', 'wb') as output:
+                for child in self.tool_box.children:
+                    if isinstance(child,ToolUserObject):
+                        userToolButton = UserToolbarButton()
+                        userToolButton.userObjectPoints = child.userObjectPoints
+                        userToolButton.userObjectPointsX = child.userObjectPointsX
+                        userToolButton.userObjectPointsY = child.userObjectPointsY
+                        pickle.dump(userToolButton, output, pickle.HIGHEST_PROTOCOL)
+                        userToolButton = None
         self.dismiss_popup()
+        self.type = None
     def dismiss_popup(self):
         self._popup.dismiss()
-#         
-#         with open(os.path.join(path, filename), 'w') as stream:
-#             stream.write(self.text_input.text)
-#         self.dismiss_popup()  
-#  
+
+class UserToolbarButton(object):
+    userObjectPoints = []
+    userObjectPointsX = []
+    userObjectPointsY = []
  
  
  
