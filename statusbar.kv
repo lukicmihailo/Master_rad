@@ -9,8 +9,11 @@
     	Color:
 			rgba: 1, 1, 1, 1
     Button:
-        text: 'Save diagram as jpeg'
+        text: 'Save diagram as png'
         on_press: root.save_diagram(*args)
+    Button:
+        text: 'Save toolbar'
+        on_press: root.save_toolbar(*args)
         
 <LoadDialog>:
     BoxLayout:

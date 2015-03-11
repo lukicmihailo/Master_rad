@@ -16,7 +16,9 @@ class StatusBar(BoxLayout):
     def save_diagram(self, instance):
         self.type = 'Diagram'
         self.show_save()
-
+    def save_toolbar(self, instance):
+        self.type = 'Toolbar'
+        self.show_save()
         
 
     def show_load(self):
@@ -33,10 +35,12 @@ class StatusBar(BoxLayout):
         self.dismiss_popup()
     def save(self, path, filename):
         if self.type == 'Diagram':
+            filename = os.path.join(path, filename)
             filename = filename +'.png'
-            path = path+'/'+filename
             ds = self.drawing_space
-            ds.export_to_png(filename=path)  
+            ds.export_to_png(filename=filename)
+        elif self.type == 'Toolbar': 
+            pass  
         self.dismiss_popup()
     def dismiss_popup(self):
         self._popup.dismiss()
