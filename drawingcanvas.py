@@ -4,7 +4,8 @@ from kivy.gesture import Gesture, GestureDatabase
 from kivy.uix.stencilview import StencilView
 
 from oblici import line45_str, circle_str, cross_str
-
+from kivy.graphics import (Canvas, Translate, Fbo, ClearColor, ClearBuffers,
+Scale)
 
 kivy.require('1.8.0')
 
@@ -126,3 +127,22 @@ class DrawingCanvas(StencilView):
         self.tool_box.tool_line.widgetizeLink(self,element1,element2)
         element1.addLinkElement(element2)
         element2.addLinkElement(element1)
+        
+
+    def export_to_png(self, filename, *args):
+        if self.parent is not None:
+            canvas_parent_index = self.parent.canvas.indexof(self.canvas)
+            self.parent.canvas.remove(self.canvas)
+        fbo = Fbo(size=self.size, with_stencilbuffer=True)
+        with fbo:
+            ClearColor(0, 0, 0, 1)
+            ClearBuffers()
+            Scale(1, -1, 1)
+            Translate(-self.x, -self.y - self.height, 0)
+        fbo.add(self.canvas)
+        fbo.draw()
+        fbo.texture.save(filename, flipped=False)
+        fbo.remove(self.canvas)
+        if self.parent is not None:
+            self.parent.canvas.insert(canvas_parent_index, self.canvas)
+        return True

@@ -2,13 +2,11 @@
 #:kivy 1.8.0
 #:import statusbar statusbar
 <StatusBar>:
-    msg_text: _msg_label.text
     orientation: 'horizontal'
+    padding: 2
     canvas:
     	Color:
 			rgba: 1, 1, 1, 1
-    Label:
-        text: 'Total Figures: ' + str(root.counter)
-    Label:
-        id: _msg_label
-        text: "Kivy started"
+    Button:
+        text: 'Save diagram as jpeg'
+        on_press: root.save_diagram(*args)
