@@ -8,8 +8,6 @@ import os
 import pickle
 
 from toolbox import ToolUserObject
-
-
 kivy.require('1.8.0')
 class StatusBar(BoxLayout):
     loadfile = ObjectProperty(None)
@@ -36,12 +34,23 @@ class StatusBar(BoxLayout):
         self._popup.open()
     def load(self, path, filename):
         if self.type == 'Toolbar':
-            with open('toolbar.pkl', 'rb') as input:
-                userToolButton = pickle.load(input)
-                newObject = ToolUserObject()
-                newObject.setParent(self.tool_box)
-                newObject.setObject(userToolButton.userObjectPoints, userToolButton.userObjectPointsX,userToolButton.userObjectPointsY)
-                self.tool_box.add_widget(newObject)
+            filename = os.path.join(path, filename[0])
+            with open(filename, 'rb') as input:
+                try:
+                    userToolButton = pickle.load(input)
+                    if userToolButton!=None:
+                        self.clearToolbar()
+                    while userToolButton != None:
+                        newObject = ToolUserObject()
+                        newObject.setParent(self.tool_box)
+                        newObject.setObject(userToolButton.userObjectPoints, userToolButton.userObjectPointsX,userToolButton.userObjectPointsY)
+                        self.tool_box.add_widget(newObject)
+                        try:
+                            userToolButton = pickle.load(input)
+                        except EOFError:
+                            userToolButton = None
+                except EOFError:
+                    userToolButton = None
         self.dismiss_popup()
     def save(self, path, filename):
         if self.type == 'Diagram':
@@ -50,7 +59,9 @@ class StatusBar(BoxLayout):
             ds = self.drawing_space
             ds.export_to_png(filename=filename)
         elif self.type == 'Toolbar': 
-            with open('toolbar.pkl', 'wb') as output:
+            filename = os.path.join(path, filename)
+            filename = filename +'.pkl'
+            with open(filename, 'wb') as output:
                 for child in self.tool_box.children:
                     if isinstance(child,ToolUserObject):
                         userToolButton = UserToolbarButton()
@@ -63,7 +74,10 @@ class StatusBar(BoxLayout):
         self.type = None
     def dismiss_popup(self):
         self._popup.dismiss()
-
+    def clearToolbar(self):
+        for child in self.tool_box.children:
+            if isinstance(child,ToolUserObject):
+                self.tool_box.remove_widget(child)    
 class UserToolbarButton(object):
     userObjectPoints = []
     userObjectPointsX = []
